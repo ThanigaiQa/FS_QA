@@ -42,8 +42,11 @@ public class Calculator {
 
             System.out.println("Do you want to perform another operation? (YES/NO)");
             String value = sc.next();
-            if (value.equalsIgnoreCase("no")) {
-                condition = false;
+            if (value.equalsIgnoreCase("yes")) {
+                condition = true;
+            }
+            else{
+                condition =false;
             }
         }
 
