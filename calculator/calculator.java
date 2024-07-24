@@ -1,23 +1,30 @@
 import java.util.Scanner;
 
-public class calculator {
+public class Calculator {
 
     public static void main(String[] args) {
+        // Create an instance of Calculator
+        Calculator calculator = new Calculator();
 
-        ///Calculater project
-
+        // Scanner for user input
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to Simple Calculator!");
 
         while (true) {
             // Ask user for the operation type
             System.out.println("Enter operation type (+, -, *, /) or 'exit' to quit: ");
-            String operationType  = scanner.next().trim();
+            String operationType = scanner.next().trim();
 
             // Exit condition
             if (operationType.equalsIgnoreCase("exit")) {
                 System.out.println("Exiting the calculator. Goodbye!");
                 break;
+            }
+
+            if (!operationType.equals("+") && !operationType.equals("-") &&
+                    !operationType.equals("*") && !operationType.equals("/")) {
+                System.out.println("Invalid operation type. Please enter one of the following: +, -, *, /");
+                continue;
             }
 
             // Read numbers from the user
@@ -45,16 +52,21 @@ public class calculator {
 
             switch (operationType) {
                 case "+":
-                    result = add(numbers);
+                    result = calculator.add(numbers);
                     break;
                 case "-":
-                    result = subtract(numbers);
+                    result = calculator.subtract(numbers);
                     break;
                 case "*":
-                    result = multiply(numbers);
+                    result = calculator.multiply(numbers);
                     break;
                 case "/":
-                    result = divide(numbers);
+                    try {
+                        result = calculator.divide(numbers);
+                    } catch (ArithmeticException e) {
+                        System.out.println(e.getMessage());
+                        validOperation = false;
+                    }
                     break;
                 default:
                     System.out.println("Unsupported operator. Please use '+', '-', '*', or '/'.");
@@ -69,8 +81,9 @@ public class calculator {
 
         scanner.close();
     }
+
     // Method to perform addition on an array of numbers
-    public static double add(double[] numbers) {
+    public double add(double[] numbers) {
         double sum = 0;
         for (double num : numbers) {
             sum += num;
@@ -79,7 +92,7 @@ public class calculator {
     }
 
     // Method to perform subtraction on an array of numbers
-    public static double subtract(double[] numbers) {
+    public double subtract(double[] numbers) {
         double difference = numbers[0];
         for (int i = 1; i < numbers.length; i++) {
             difference -= numbers[i];
@@ -88,7 +101,7 @@ public class calculator {
     }
 
     // Method to perform multiplication on an array of numbers
-    public static double multiply(double[] numbers) {
+    public double multiply(double[] numbers) {
         double product = 1;
         for (double num : numbers) {
             product *= num;
@@ -97,7 +110,7 @@ public class calculator {
     }
 
     // Method to perform division on an array of numbers
-    public static double divide(double[] numbers) {
+    public double divide(double[] numbers) {
         double quotient = numbers[0];
         for (int i = 1; i < numbers.length; i++) {
             if (numbers[i] == 0) {
@@ -106,7 +119,8 @@ public class calculator {
             quotient /= numbers[i];
         }
         return quotient;
-
     }
-
 }
+
+
+
