@@ -1,56 +1,52 @@
-package org.example;
+package calculator;
+
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Calculator {
-    public static void main(String[] args) {
+    private List<String> history;
 
-        List<String> history = new ArrayList<>();
-        Scanner sc = new Scanner(System.in);
-        boolean checkingValue = true;
+    public Calculator() {
+        this.history = new ArrayList<>();
+    }
 
-        while (checkingValue) {
-            System.out.println("enter A value");
-            int a = sc.nextInt();
-            System.out.println("enter B value");
-            int b = sc.nextInt();
-            System.out.println("what operation do you want to do");
-            System.out.println("these are the operations: + _ * /");
-            String operation = sc.next();
+    public String operation(int a, int b, String operation) {
+        String result = "";
+        switch (operation) {
+            case "+":
+                result = a + " " + operation + " " + b + " = " + (a + b);
+                break;
+            case "-":
+                result = a + " " + operation + " " + b + " = " + (a - b);
+                break;
+            case "*":
+                result = a + " " + operation + " " + b + " = " + (a * b);
+                break;
+            case "/":
+                if (b != 0) {
+                    result = a + " " + operation + " " + b + " = " + (a / b);
+                } else {
+                    result = "Error: Division by zero";
+                }
+                break;
+            case "history":
+                getHistory();
+            default:
+                System.out.println("No Match");
+        }
+        history.add(result);
+        return result;
+    }
 
-            String result = "";
-            switch (operation) {
-                case "+":
-                    result = "the addition is" + " " + (a + b);
-                    break;
-                case "-":
-                    result = "the subtraction is" + " " + (a - b);
-                    break;
-                case "*":
-                    result = "the multiplication is" + " " + (a * b);
-                    break;
-                case "/":
-                    result = "the division is" + " " + (a / b);
-                    break;
-                default:
-                    System.out.println("No Match");
-            }
-            System.out.println(result);
-            history.add(result);
-
-            System.out.println("Do you want to do another operation? (yes/no)");
-            String continueResponse = sc.next();
-            if (continueResponse.equalsIgnoreCase("no")) {
-                checkingValue = false;
+    public void getHistory() {
+        if (history.isEmpty()) {
+            System.out.println("No history available");
+        } else {
+            System.out.println("calculation history");
+            for (String record : history) {
+                System.out.println(record);
             }
         }
-        System.out.println("Calculation History:");
-        for (String record : history) {
-            System.out.println(record);
-        }
-
-        sc.close();
     }
 }
